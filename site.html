@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>KileSite</title>
+  <style>
+    body { background: #111; color: #0f0; font-family: monospace; text-align: center; padding-top: 100px; }
+    .error { color: #f33; }
+    .ok { color: #0f0; }
+  </style>
+</head>
+<body>
+  <h1 id="status">🔄 Проверяем сервер...</h1>
+
+  <script>
+    async function checkServer() {
+      try {
+        const res = await fetch('http://localhost:3000/status');
+        if (!res.ok) throw new Error('Server down');
+        const text = await res.text();
+        document.getElementById('status').textContent = text;
+        document.getElementById('status').className = 'ok';
+      } catch {
+        document.getElementById('status').textContent = '❌ Сервер перегружен или не запущен';
+        document.getElementById('status').className = 'error';
+      }
+    }
+    checkServer();
+  </script>
+</body>
+</html>
